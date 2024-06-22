@@ -1,0 +1,22 @@
+# Providerconfig that referers to the secret
+apiVersion: openstack.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: provider-openstack-config
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      key: config
+      name: provider-openstack-config
+      namespace: crossplane
+---
+# Secret that stores credentials and other configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: provider-openstack-config
+  namespace: crossplane
+type: Opaque
+data:
+  config: <see below>
