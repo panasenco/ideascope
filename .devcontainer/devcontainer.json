@@ -1,0 +1,9 @@
+{
+    "name": "Dev Container",
+    "build": {
+        "dockerfile": "../Dockerfile.dev"
+    },
+    "mounts": [
+        "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly"
+    ]
+}
