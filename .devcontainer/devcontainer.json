@@ -1,0 +1,26 @@
+{
+    "name": "Ideascope",
+    "build": {
+        "context": "..",
+        "dockerfile": "../Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "denoland.vscode-deno",
+                "ms-azuretools.vscode-docker"
+            ],
+            "settings": {
+                "deno.enable": true,
+                "deno.lint": true,
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+    "forwardPorts": [],
+    "postCreateCommand": "deno --version",
+    "remoteUser": "vscode",
+    "remoteEnv": {
+        "EDITOR": "cursor --wait"
+    }
+} 
