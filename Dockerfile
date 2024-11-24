@@ -28,6 +28,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
 ENV DENO_INSTALL=/usr/local
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
+# Install Playwright Chromium
+RUN deno --allow-env --allow-sys --allow-read --allow-write --allow-run npm:playwright install --with-deps chromium
+
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=dialog
 
