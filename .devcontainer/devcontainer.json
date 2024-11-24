@@ -4,6 +4,7 @@
         "dockerfile": "../Dockerfile.dev"
     },
     "mounts": [
-        "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly"
+        "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly",
+        "type=bind,source=${localEnv:HOME}/.config/openstack,target=/etc/openstack,readonly"
     ]
 }

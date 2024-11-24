@@ -1,0 +1,14 @@
+heat_template_version: 2015-10-15
+
+description: Bootstrap OpenStack resources for the OpenShift installer.
+
+resources:
+  openshift_floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: ext-floating1
+
+outputs:
+  floating_ip_address:
+    description: The address of the created floating IP
+    value: { get_attr: [openshift_floating_ip, floating_ip_address] }
