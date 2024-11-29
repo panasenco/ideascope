@@ -3,12 +3,24 @@
 import { Command } from "jsr:@cliffy/command@1.0.0-rc.7";
 import { chromium } from "npm:playwright";
 
-async function get_previews(query: string, max_pages: number) {
+async function get_urls(query: string, max_pages: number) {
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext();
     const page = await context.newPage();
-    await page.goto(`https://patents.google.com/?q=${encodeURIComponent(query)}`);
-    await page.screenshot({ path: 'screenshot.png' });
+    for (let page_number = 0; page_number <= max_pages; page_number++) {
+        await page.goto(`https://patents.google.com/?q=${encodeURIComponent(query)}&page=${page_number}`);
+        // Wait for articles to load and get all articles
+        const articles = await page.getByRole('article').all();
+        // Process each article
+        for (const article of articles) {
+            const link = await article.getByRole('link').first();
+            const title = await link.textContent();
+            const url = await link.getAttribute('href');
+            const text = await article.textContent();
+            console.log('Found article:', text);
+        }
+        await page.screenshot({ path: `screenshot-${page_number}.png` });
+    }
 }
 
 const { options } = await new Command()
@@ -23,4 +35,4 @@ const { options } = await new Command()
   })
   .parse(Deno.args);
 
-await get_previews(options.query, options.maxPages);
+await get_urls(options.query, options.maxPages);
